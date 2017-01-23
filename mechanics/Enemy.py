@@ -22,7 +22,6 @@ class Enemy(Entity):
         self.pos = Vec2D(x, y - self.size.y)
 
     def move(self):
-        print(self.rel_pos)
         if self.rel_pos == 0 or self.rel_pos == self.width - self.size.x:
             self.movement.x *= -1
         self.rel_pos += self.movement.x

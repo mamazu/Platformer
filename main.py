@@ -3,6 +3,7 @@ from mechanics.Level import Level
 from mechanics.Player import Player
 
 pygame.init()
+pygame.font.init()
 clock = pygame.time.Clock()
 
 class Game:
@@ -17,7 +18,12 @@ class Game:
             self.size = Vec2D(900, 800)
         self.screen = pygame.display.set_mode(self.size.getTuple())
         self.running = True
+        self.isGameover = False
         self.run()
+
+    def setup(self):
+        self.player = Player()
+        self.level = Level()
 
     def run(self):
         while self.running:
@@ -26,19 +32,20 @@ class Game:
                 self.handle_event(event)
             # Movement
             self.player.move()
+            if self.level.enemies(self.player):
+                self.player.damage()
             if not self.player.check_bounds(self.screen.get_rect()):
-                print("Game over")
+                self.gameover()
             self.level.move()
             self.draw()
             clock.tick(60)
 
     def draw(self):
         # Drawing
-        self.screen.fill((142, 193, 231))
-        self.player.draw(self.screen)
-        self.level.draw(self.screen)
-        # player.draw()
-        # enemies.draw()
+        if not self.isGameover:
+            self.screen.fill((142, 193, 231))
+            self.player.draw(self.screen)
+            self.level.draw(self.screen)
         # Updating
         pygame.display.update()
 
@@ -59,6 +66,15 @@ class Game:
                 self.player.control(-1)
             elif key == pygame.K_DOWN:
                 self.player.control(0)
+            if self.isGameover and key == pygame.K_r:
+                self.setup()
+                self.isGameover = False
+
+    def gameover(self):
+        font = pygame.font.SysFont("monospace", 80)
+        text = font.render("Game over", 1, (0, 0, 0))
+        self.screen.blit(text, (self.size / 2).getTuple())
+        self.isGameover = True
 
 if __name__ == "__main__":
     game = Game()

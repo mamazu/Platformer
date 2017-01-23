@@ -67,3 +67,10 @@ class Level:
     def draw(self, screen):
         for block in self.blocks:
             block.draw(screen)
+
+    def enemies(self, player):
+        collision = False
+        for block in self.blocks:
+            if block.enemy is None: continue
+            collision |= block.enemy.collide(player)
+        return collision

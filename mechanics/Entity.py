@@ -1,4 +1,4 @@
-from tools.VecMath import Vec2D
+from tools.VecMath import Vec2D, Pane
 from tools.utils import Drawable
 
 
@@ -8,6 +8,14 @@ class Entity(Drawable):
     def __init__(self):
         Drawable.__init__(self)
         self.movement = Vec2D(0, 0)
+
+    def collide(self, other):
+        from pygame import Rect
+        if isinstance(other, Rect):
+            return self.getRect().colliderect(other)
+        if isinstance(other, Pane):
+            return self.getRect().colliderect(other.getRect())
+        return False
 
     def move(self):
         from main import Game
