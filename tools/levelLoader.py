@@ -13,7 +13,7 @@ def load(filename):
         if line.startswith('#'):
             continue
         parts = re.split(r'\s+', line.strip())
-        if len(parts) != 4:
+        if len(parts) != 5:
             continue
         parts = [float(part) for part in parts]
         block = (Vec2D(parts[0], parts[1]), Vec2D(parts[2], parts[3]))

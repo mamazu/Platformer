@@ -3,7 +3,8 @@ from tools.utils import Drawable
 
 
 class Player(Drawable):
-    DEFAULTGRAVITY= 0.09
+    DEFAULTGRAVITY = 0.09
+    DEFAULTSPEED = 2
 
     def __init__(self, pos=None, size=None):
         if not isinstance(pos, Vec2D):
@@ -13,8 +14,11 @@ class Player(Drawable):
         else:
             size = Vec2D(abs(size), abs(size))
         Drawable.__init__(self, pos, size)
-        self.jumping = False
-        self.movement = Vec2D(2, Player.DEFAULTGRAVITY)
+        self.jumping = 0
+        self.movement = Vec2D(Player.DEFAULTSPEED, Player.DEFAULTGRAVITY)
+
+    def control(self, x):
+        self.movement.x = 0 if x == 0 else x / abs(x) * Player.DEFAULTSPEED
 
     def move(self, level):
         temppos = Vec2D(vec=self.pos)
@@ -35,14 +39,13 @@ class Player(Drawable):
             self.movement.y += Player.DEFAULTGRAVITY
         else:
             self.movement.y = 0
-            self.jumping = False
+            self.jumping = 0
 
     def jump(self):
-        if self.jumping:
+        if self.jumping > 1:
             return
         self.movement.y = -4
-        self.jumping = True
-
+        self.jumping += 1
 
     def check_bounds(self, bounds):
         return bounds.contains(self.getRect())

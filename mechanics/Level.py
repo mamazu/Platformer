@@ -3,6 +3,8 @@ from tools.utils import Drawable
 
 
 class Block(Drawable):
+    COLOR = (0, 128, 0)
+
     def __init__(self, pos=None, size=None):
         Drawable.__init__(self, pos, size)
 
@@ -19,7 +21,7 @@ class Block(Drawable):
 
     def draw(self, screen):
         import pygame
-        pygame.draw.rect(screen, (255, 0, 0), self.getRect())
+        pygame.draw.rect(screen, Block.COLOR, self.getRect())
 
 
 class Level:

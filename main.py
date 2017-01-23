@@ -32,7 +32,7 @@ class Game:
             if not self.player.check_bounds(self.screen.get_rect()):
                 print("Game over")
             self.draw()
-            clock.tick(40)
+            clock.tick(60)
 
     def draw(self):
         # Drawing
@@ -53,8 +53,14 @@ class Game:
             if key == pygame.K_ESCAPE:
                 print("End of program")
                 self.running = False
-            elif key == pygame.K_SPACE:
+            elif key == pygame.K_SPACE or key == pygame.K_UP:
                 self.player.jump()
+            elif key == pygame.K_RIGHT:
+                self.player.control(1)
+            elif key == pygame.K_LEFT:
+                self.player.control(-1)
+            elif key == pygame.K_DOWN:
+                self.player.control(0)
 
 if __name__ == "__main__":
     game = Game()
