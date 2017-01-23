@@ -1,7 +1,7 @@
 import pygame
 
 pygame.init()
-
+clock = pygame.time.Clock()
 
 class Game:
 
@@ -32,6 +32,7 @@ class Game:
             if not self.player.check_bounds(self.screen.get_rect()):
                 print("Game over")
             self.draw()
+            clock.tick(40)
 
     def draw(self):
         # Drawing
@@ -53,7 +54,7 @@ class Game:
                 print("End of program")
                 self.running = False
             elif key == pygame.K_SPACE:
-                self.player.jump = True
+                self.player.jump()
 
 if __name__ == "__main__":
     game = Game()

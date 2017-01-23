@@ -40,8 +40,6 @@ class Level:
         has_collided = False
         for block in self.blocks:
             has_collided |= block.collide(other)
-        if has_collided:
-            print("you hit something")
         return has_collided
 
     def draw(self, screen):
