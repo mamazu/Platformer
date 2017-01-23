@@ -7,6 +7,7 @@ class Block(Drawable):
 
     def __init__(self, pos=None, size=None):
         Drawable.__init__(self, pos, size)
+        self.enemy = None
 
     def collide(self, other):
         from pygame.rect import Rect
@@ -19,18 +20,37 @@ class Block(Drawable):
         else:
             return None
 
+    def move(self):
+        self.enemy.move()
+
+    def add_enemy(self, enemy_type):
+        from mechanics.Enemy import Enemy
+        if enemy_type == 0:
+            return
+        self.enemy = Enemy(self.size)
+        self.enemy.stand_on(self.getRect())
+
     def draw(self, screen):
         import pygame
         pygame.draw.rect(screen, Block.COLOR, self.getRect())
+        if self.enemy is not None:
+            self.enemy.draw(screen)
 
 
 class Level:
     def __init__(self):
         from tools.levelLoader import load
         blocks = load('data/level1.lvl')
-        self.blocks = [Block(b[0], b[1]) for b in blocks]
+        self.blocks = []
+        for b in blocks:
+            block = Block(b['pos'], b['size'])
+            block.add_enemy(b['enemy'])
+            self.blocks.append(block)
 
     def move(self, move=None):
+        for block in self.blocks:
+            if block.enemy is None: continue
+            block.move()
         if Vec2D.isVec(move):
             for block in self.blocks:
                 block.pos += move

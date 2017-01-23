@@ -1,9 +1,13 @@
 import pygame
+from mechanics.Level import Level
+from mechanics.Player import Player
 
 pygame.init()
 clock = pygame.time.Clock()
 
 class Game:
+    level = Level()
+    player = Player()
 
     def __init__(self, size=None):
         from tools.VecMath import Vec2D
@@ -13,14 +17,7 @@ class Game:
             self.size = Vec2D(900, 800)
         self.screen = pygame.display.set_mode(self.size.getTuple())
         self.running = True
-        self.setup()
         self.run()
-
-    def setup(self):
-        from mechanics.Level import Level
-        from mechanics.Player import Player
-        self.level = Level()
-        self.player = Player()
 
     def run(self):
         while self.running:
@@ -28,9 +25,10 @@ class Game:
             for event in pygame.event.get():
                 self.handle_event(event)
             # Movement
-            self.player.move(self.level)
+            self.player.move()
             if not self.player.check_bounds(self.screen.get_rect()):
                 print("Game over")
+            self.level.move()
             self.draw()
             clock.tick(60)
 
