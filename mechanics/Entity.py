@@ -17,28 +17,40 @@ class Entity(Drawable):
             return self.getRect().colliderect(other.getRect())
         return False
 
+    def debug(self, surf):
+        from pygame.draw import line
+        start = self.pos + self.size / 2
+        end = self.pos + self.size / 2 + self.movement * 5
+        line(surf, (255,255,0), start.getTuple(), end.getTuple(), 5)
+
     def move(self):
         from main import Game
         level = Game.level
         collision = []
-        temppos = Vec2D(vec=self.pos)
+        temp_pos = Vec2D(vec=self.pos)
         # Checking x direction
         size = self.size.x if self.movement.x > 0 else 0
-        temppos.x += size + self.movement.x - 1
-        collision.append(level.collide(temppos))
+        temp_pos.x += size + self.movement.x - 1
+        collision.append(level.collide(temp_pos))
         if not collision[0]:
             self.pos.x += self.movement.x
         else:
             self.movement.x = 0
-        temppos.x = self.pos.x
+        temp_pos.x = self.pos.x
 
         # Checking y direction
         size = self.size.y if self.movement.y > 0 else 0
-        temppos.y += size + self.movement.y - 1
-        collision.append(level.collide(temppos))
+        temp_pos.y += size + self.movement.y - 1
+        collision.append(level.collide(temp_pos))
         if not collision[1]:
             self.pos.y += self.movement.y
             self.movement.y += Entity.DEFAULTGRAVITY
         else:
             self.movement.y = 0
         return collision
+
+    def draw(self, surf):
+        from main import Game
+        Drawable.draw(self, surf)
+        if Game.debugger.get_debugging():
+            self.debug(surf)

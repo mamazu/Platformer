@@ -7,6 +7,7 @@ class Enemy(Entity):
     def __init__(self, obj):
         from tools.VecMath import Vec2D
         Drawable.__init__(self, size=Vec2D(30, 30))
+        self.set_image('res/enemy.png')
         self.width = obj.x
         self.rel_pos = 1
         self.movement = Vec2D(1, 0)
@@ -26,7 +27,3 @@ class Enemy(Entity):
             self.movement.x *= -1
         self.rel_pos += self.movement.x
         Entity.move(self)
-
-    def draw(self, surf):
-        from pygame.draw import rect
-        rect(surf, (255, 0, 0), self.getRect())
