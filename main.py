@@ -46,7 +46,7 @@ class Game:
             if self.level.enemies(self.player):
                 self.player.damage()
                 self.GUI.elements[0].set_health(self.player.health)
-            if not self.player.check_bounds(self.screen.get_rect()):
+            if not self.player.check_bounds(self.screen.get_rect()) or self.player.health == 0:
                 self.gameover()
             self.level.move()
             self.draw()
@@ -91,7 +91,8 @@ class Game:
     def gameover(self):
         font = pygame.font.SysFont("monospace", 80)
         text = font.render("Game over", 1, (0, 0, 0))
-        self.screen.blit(text, (self.size / 2).get_tuple())
+        text_rect = Vec2D(vec=text.get_size())
+        self.screen.blit(text, ((self.size - text_rect) / 2).get_tuple())
         self.is_game_over = True
 
 

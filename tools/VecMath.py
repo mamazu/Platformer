@@ -137,7 +137,6 @@ class Vec2D:
             self.x = value.x
             self.y = value.y
         elif len(value) == 2:
-            print(value)
             self.x, self.y = value
         else:
             self.x, self.y = (0, 0)
