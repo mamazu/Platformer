@@ -38,10 +38,5 @@ class Player(Entity):
             self.health = 0
 
     def draw(self, screen):
-        from pygame.draw import rect
-        from tools.utils import Pane
         Entity.draw(self, screen)
-        pos = Vec2D(20, 20)
-        size = Vec2D(200, 20)
-        rect(screen, (153, 153, 153), Pane(pos, size).get_rect())
-        rect(screen, (153, 0, 0), Pane(pos, size * Vec2D(self.health / 100, 1)).get_rect())
+

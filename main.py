@@ -24,11 +24,16 @@ class Game:
         self.screen = pygame.display.set_mode(self.size.get_tuple())
         self.running = True
         self.is_game_over = False
+        self.setup()
         self.run()
 
     def setup(self):
-        self.player = Player()
-        self.level = Level()
+        from tools.GUI import GUI
+        from tools.GUI import Healthbar
+        self.player = Game.player
+        self.level = Game.level
+        self.GUI = GUI()
+        self.GUI.add(Healthbar(Vec2D(20, 20), Vec2D(200, 20)))
 
     def run(self):
         while self.running:
@@ -40,6 +45,7 @@ class Game:
             self.player.move()
             if self.level.enemies(self.player):
                 self.player.damage()
+                self.GUI.elements[0].set_health(self.player.health)
             if not self.player.check_bounds(self.screen.get_rect()):
                 self.gameover()
             self.level.move()
@@ -54,6 +60,7 @@ class Game:
             self.screen.fill((142, 193, 231))
             self.player.draw(self.screen)
             self.level.draw(self.screen)
+            self.GUI.draw(self.screen)
         # Updating
         self.debugger.draw(self.screen)
         pygame.display.update()
