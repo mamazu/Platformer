@@ -32,21 +32,17 @@ class Entity(Drawable):
         from main import Game
         level = Game.level
         collision = []
-        temp_pos = Vec2D(vec=self.pos)
         # Checking x direction
-        size = self.size.x if self.movement.x > 0 else 0
-        temp_pos.x += size + self.movement.x - 1
-        collision.append(level.collide(temp_pos))
+        xrect = self.get_rect().move(self.movement.x, -1)
+        collision.append(level.collide(xrect))
         if not collision[0]:
             self.pos.x += self.movement.x
         else:
             self.movement.x = 0
-        temp_pos.x = self.pos.x
 
         # Checking y direction
-        size = self.size.y if self.movement.y > 0 else 0
-        temp_pos.y += size + self.movement.y - 1
-        collision.append(level.collide(temp_pos))
+        yrect = self.get_rect().move(0, self.movement.y)
+        collision.append(level.collide(yrect))
         if not collision[1]:
             self.pos.y += self.movement.y
             self.movement.y += Entity.DEFAULT_GRAVITY

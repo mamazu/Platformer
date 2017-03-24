@@ -19,6 +19,9 @@ class Player(Entity):
             self.movement.x = 0
             return
         direction = x / abs(x)
+        if self.movement.x == 0:
+            self.movement.x = direction * Player.DEFAULT_SPEED
+            return
         # Flipping the image of the player if he turns around
         if direction != self.movement.x / Player.DEFAULT_SPEED:
             self.turn_around()
