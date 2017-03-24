@@ -18,9 +18,10 @@ class Player(Entity):
         self.movement.x = 0 if x == 0 else x / abs(x) * Player.DEFAULT_SPEED
 
     def move(self):
-        x_move, y_move = Entity.move(self)
-        if not y_move:
-            self.jumping = False
+        Entity.move(self)
+
+        if self.movement.y == 0:
+            self.jumping = 0
 
     def jump(self):
         if self.jumping > 1:
