@@ -4,6 +4,7 @@ import time
 from mechanics.Level import Level
 from mechanics.Player import Player
 from tools.Debugger import Debug
+from tools.VecMath import Vec2D
 
 pygame.init()
 pygame.font.init()
@@ -16,7 +17,6 @@ class Game:
     debugger = Debug()
 
     def __init__(self, size=None):
-        from tools.VecMath import Vec2D
         if isinstance(size, Vec2D):
             self.size = size
         else:
