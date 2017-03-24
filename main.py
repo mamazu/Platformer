@@ -32,10 +32,9 @@ class Game:
         from tools.GUI import Healthbar
         self.player = Game.player
         self.level = Game.level
+        self.enemies = self.level.get_ememies()
         self.GUI = GUI()
-        healthbar = Healthbar(Vec2D(20, 20), Vec2D(200, 20))
-        healthbar.set_mode("relative")
-        self.GUI.add(healthbar)
+        self.GUI.add(Healthbar(Vec2D(20, 20), Vec2D(200, 20)))
 
     def run(self):
         while self.running:
