@@ -44,9 +44,8 @@ class Game:
                 self.handle_event(event)
             # Movement
             self.player.move()
-            if self.level.enemies(self.player):
-                self.player.damage()
-                self.GUI.elements[0].set_health(self.player.health)
+            self.player.damage(self.enemies)
+            self.GUI.elements[0].set_health(self.player.health)
             if not self.player.check_bounds(self.screen.get_rect()) or self.player.health == 0:
                 self.gameover()
             self.level.move()

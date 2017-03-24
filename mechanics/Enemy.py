@@ -1,13 +1,16 @@
 from mechanics.Entity import Entity
 from tools.utils import Drawable
-
+from random import randint
 
 class Enemy(Entity):
-    def __init__(self, obj):
+    DEFAULT_DAMAGE = randint(5, 10)
+
+    def __init__(self, obj, damage = None):
         from tools.VecMath import Vec2D
         Drawable.__init__(self, size=Vec2D(30, 30))
         self.set_image('res/enemy.png')
         self.width = obj.x
+        self.damage = damage if damage is not None else Enemy.DEFAULT_DAMAGE
         self.rel_pos = 1
         self.movement = Vec2D(1, 0)
 

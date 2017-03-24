@@ -74,3 +74,10 @@ class Level:
             if block.enemy is None: continue
             collision |= block.enemy.collide(player)
         return collision
+
+    def get_ememies(self):
+        enemies= [        ]
+        for block in self.blocks:
+            if block.enemy is None: continue
+            enemies.append(block.enemy)
+        return enemies

@@ -35,7 +35,6 @@ class Healthbar(Drawable):
         self.hud_text = self.get_text()
 
     def get_health(self, string=False):
-        print(self.display_mode)
         if self.display_mode == Healthbar.MODE["relative"]:
             return self.health if not string else str(self.health * 100) + "%"
         elif self.display_mode == Healthbar.MODE["absolute"]:

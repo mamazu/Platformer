@@ -19,6 +19,7 @@ class Player(Entity):
             self.movement.x = 0
             return
         direction = x / abs(x)
+        # Set a non moving player in motion
         if self.movement.x == 0:
             self.movement.x = direction * Player.DEFAULT_SPEED
             return
@@ -41,12 +42,14 @@ class Player(Entity):
     def check_bounds(self, bounds):
         return bounds.contains(self.get_rect())
 
-    def damage(self):
-        from random import randint
-        self.health -= randint(0, 20)
-        if self.health < 0:
-            self.health = 0
+    def damage(self, enemies):
+        encounters = 0
+        for enemy in enemies:
+            if not enemy.collide(self.get_rect()):
+                continue
+            self.health -= enemy.damage
+            encounters += 1
+        return encounters
 
     def draw(self, screen):
         Entity.draw(self, screen)
-
