@@ -9,7 +9,7 @@ class Player(Entity):
         Entity.__init__(self)
         self.pos = Vec2D(10, 700) if not isinstance(pos, Vec2D) else pos
         self.size = Vec2D(30, 30) if not isinstance(size, int) else Vec2D(abs(size), abs(size))
-        self.set_image('res/player.png')
+        self.set_image('res/doodle.png')
         self.movement = Vec2D(Player.DEFAULT_SPEED, Player.DEFAULT_GRAVITY)
         self.health = 100
         self.jumping = 0
