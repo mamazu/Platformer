@@ -3,7 +3,6 @@ from tools.utils import Drawable
 
 
 class Enemy(Entity):
-
     def __init__(self, obj):
         from tools.VecMath import Vec2D
         Drawable.__init__(self, size=Vec2D(30, 30))
@@ -19,7 +18,7 @@ class Enemy(Entity):
         if isinstance(rect, Rect):
             x, y = rect.topleft
         elif isinstance(rect, Vec2D):
-            x, y = rect.getTuple()
+            x, y = rect.get_tuple()
         self.pos = Vec2D(x, y - self.size.y)
 
     def move(self):

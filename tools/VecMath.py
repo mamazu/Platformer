@@ -15,7 +15,7 @@ class Vec2D:
 
     def __add__(self, other):
         """
-        Adds two vectors componentwise and adds a scale and a vector
+        Adds two vectors component-wise and adds a scale and a vector
         :param other: Second part of the sum
         :type other: int, float, Vec2D
         :return: Returns the sum
@@ -46,11 +46,11 @@ class Vec2D:
         """
         Multiplies an int with a vector with a number or a vector.
         If the parameter other is a number it, scalar multiplication will be applied.
-        If the parameter is a vector the componetns will be multiplied one by one.
+        If the parameter is a vector the components will be multiplied one by one.
         :type other: int, float, Vec2D
         :rtype: Vec2D
         """
-        if Vec2D.isVec(other):
+        if Vec2D.is_vec(other):
             return Vec2D(self.x * other.x, self.y * other.y)
         elif isinstance(other, int) or isinstance(other, float):
             return Vec2D(self.x * other, self.y * other)
@@ -76,7 +76,7 @@ class Vec2D:
             True if equal, false otherwise
         :rtype: bool
         """
-        if not Vec2D.isVec(other):
+        if not Vec2D.is_vec(other):
             return False
         return self.x == other.x and self.y == other.y
 
@@ -92,13 +92,13 @@ class Vec2D:
         return not (self == other)
 
     def __lt__(self, other):
-        if Vec2D.isVec(other):
+        if Vec2D.is_vec(other):
             return self.x < other.x and self.y < other.y
         if isinstance(other, int) or isinstance(other, float):
             return self.x < other and self.y < other
 
     def __gt__(self, other):
-        if Vec2D.isVec(other):
+        if Vec2D.is_vec(other):
             return self.x > other.x and self.y > other.y
         if isinstance(other, int) or isinstance(other, float):
             return self.x > other and self.y > other
@@ -106,24 +106,24 @@ class Vec2D:
     def __len__(self):
         return 2
 
-    def getTuple(self):
+    def get_tuple(self):
         """
         Returns the tuple of the vector
         :rtype: tuple
         """
-        int_version = self.getInt()
+        int_version = self.get_int()
         return int_version.x, int_version.y
 
-    def getInt(self):
+    def get_int(self):
         """
         Returns the integer version of the vector.
         :rtype: Vec2D
         """
         return Vec2D(int(self.x), int(self.y))
 
-    def getLength(self):
+    def get_length(self):
         import math
-        return math.sqrt(self.x**2 + self.y**2)
+        return math.sqrt(self.x ** 2 + self.y ** 2)
 
     def set(self, value):
         """
@@ -133,7 +133,7 @@ class Vec2D:
         :return: The new vector
         :rtype: Vec2D
         """
-        if Vec2D.isVec(value):
+        if Vec2D.is_vec(value):
             self.x = value.x
             self.y = value.y
         elif len(value) == 2:
@@ -144,7 +144,7 @@ class Vec2D:
         return self
 
     @staticmethod
-    def isVec(vec):
+    def is_vec(vec):
         """
         Checks if the parameter is a vector
         :param vec:
@@ -168,8 +168,8 @@ class Vec2D:
         """
         return str(self)
 
+
 class Pane:
-    from pygame import Rect
     def __init__(self, pos=None, size=None):
         """
         Constructor of the pane object
@@ -178,8 +178,8 @@ class Pane:
         :param size: Size of the pane
         :type size: Vec2D
         """
-        self.pos = pos if Vec2D.isVec(pos) else Vec2D(0, 0)
-        self.size = size if Vec2D.isVec(size) else Vec2D(0, 0)
+        self.pos = pos if Vec2D.is_vec(pos) else Vec2D(0, 0)
+        self.size = size if Vec2D.is_vec(size) else Vec2D(0, 0)
 
     def set(self, value):
         """
@@ -189,20 +189,21 @@ class Pane:
         :return: Returns the pane
         :rtype: Pane
         """
+        from pygame.rect import Rect
         if isinstance(value, Rect):
             self.pos = Vec2D(value.left, value.top)
             self.size = Vec2D(value.width, value.height)
         return self
 
-    def getRect(self):
+    def get_rect(self):
         """
         Gets the rectangle object based on the pane
         :return:
         :rtype: pygame.Rect
         """
         from pygame import Rect
-        pos = self.pos.getInt()
-        size = self.size.getInt()
+        pos = self.pos.get_int()
+        size = self.size.get_int()
         return Rect(pos.x, pos.y, size.x, size.y)
 
     def __add__(self, other):

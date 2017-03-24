@@ -32,7 +32,7 @@ class Drawable(Pane):
         import pygame.image
         if isfile(path):
             self.image = pygame.image.load(path)
-            self.image = pygame.transform.scale(self.image, self.size.getTuple())
+            self.image = pygame.transform.scale(self.image, self.size.get_tuple())
         else:
             print("Invalid file")
 
@@ -42,6 +42,6 @@ class Drawable(Pane):
     def draw(self, surf):
         if self.image is None:
             from pygame.draw import rect
-            rect(surf, self.color, self.getRect())
+            rect(surf, self.color, self.get_rect())
             return
-        surf.blit(self.image, self.pos.getTuple())
+        surf.blit(self.image, self.pos.get_tuple())

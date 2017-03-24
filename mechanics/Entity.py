@@ -3,7 +3,7 @@ from tools.utils import Drawable
 
 
 class Entity(Drawable):
-    DEFAULTGRAVITY = 0.09
+    DEFAULT_GRAVITY = 0.09
 
     def __init__(self):
         Drawable.__init__(self)
@@ -12,16 +12,16 @@ class Entity(Drawable):
     def collide(self, other):
         from pygame import Rect
         if isinstance(other, Rect):
-            return self.getRect().colliderect(other)
+            return self.get_rect().colliderect(other)
         if isinstance(other, Pane):
-            return self.getRect().colliderect(other.getRect())
+            return self.get_rect().colliderect(other.get_rect())
         return False
 
     def debug(self, surf):
         from pygame.draw import line
         start = self.pos + self.size / 2
         end = self.pos + self.size / 2 + self.movement * 5
-        line(surf, (255,255,0), start.getTuple(), end.getTuple(), 5)
+        line(surf, (255, 255, 0), start.get_tuple(), end.get_tuple(), 5)
 
     def move(self):
         from main import Game
@@ -44,7 +44,7 @@ class Entity(Drawable):
         collision.append(level.collide(temp_pos))
         if not collision[1]:
             self.pos.y += self.movement.y
-            self.movement.y += Entity.DEFAULTGRAVITY
+            self.movement.y += Entity.DEFAULT_GRAVITY
         else:
             self.movement.y = 0
         return collision

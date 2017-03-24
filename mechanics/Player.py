@@ -1,22 +1,21 @@
-
-
 from mechanics.Entity import Entity
 from tools.VecMath import Vec2D
 
+
 class Player(Entity):
-    DEFAULTSPEED = 2
+    DEFAULT_SPEED = 2
 
     def __init__(self, pos=None, size=None):
         Entity.__init__(self)
         self.pos = Vec2D(10, 700) if not isinstance(pos, Vec2D) else pos
         self.size = Vec2D(30, 30) if not isinstance(size, int) else Vec2D(abs(size), abs(size))
         self.set_image('res/player.png')
-        self.movement = Vec2D(Player.DEFAULTSPEED, Player.DEFAULTGRAVITY)
+        self.movement = Vec2D(Player.DEFAULT_SPEED, Player.DEFAULT_GRAVITY)
         self.health = 100
         self.jumping = 0
 
     def control(self, x):
-        self.movement.x = 0 if x == 0 else x / abs(x) * Player.DEFAULTSPEED
+        self.movement.x = 0 if x == 0 else x / abs(x) * Player.DEFAULT_SPEED
 
     def move(self):
         x_move, y_move = Entity.move(self)
@@ -30,7 +29,7 @@ class Player(Entity):
         self.jumping += 1
 
     def check_bounds(self, bounds):
-        return bounds.contains(self.getRect())
+        return bounds.contains(self.get_rect())
 
     def damage(self):
         from random import randint
@@ -44,5 +43,5 @@ class Player(Entity):
         Entity.draw(self, screen)
         pos = Vec2D(20, 20)
         size = Vec2D(200, 20)
-        rect(screen, (153, 153, 153), Pane(pos, size).getRect())
-        rect(screen, (153, 0, 0), Pane(pos, size*Vec2D(self.health/100, 1)).getRect())
+        rect(screen, (153, 153, 153), Pane(pos, size).get_rect())
+        rect(screen, (153, 0, 0), Pane(pos, size * Vec2D(self.health / 100, 1)).get_rect())

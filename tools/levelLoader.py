@@ -23,4 +23,3 @@ def load(filename):
         }
         blockData.append(block)
     return blockData
-

@@ -1,4 +1,6 @@
-import pygame, time
+import pygame
+import time
+
 from mechanics.Level import Level
 from mechanics.Player import Player
 from tools.Debugger import Debug
@@ -19,7 +21,7 @@ class Game:
             self.size = size
         else:
             self.size = Vec2D(900, 800)
-        self.screen = pygame.display.set_mode(self.size.getTuple())
+        self.screen = pygame.display.set_mode(self.size.get_tuple())
         self.running = True
         self.is_game_over = False
         self.run()
@@ -44,7 +46,7 @@ class Game:
             self.draw()
             clock.tick(60)
             end = time.time()
-            self.debugger.set_drawcall(end - start)
+            self.debugger.set_draw_call(end - start)
 
     def draw(self):
         # Drawing
@@ -55,7 +57,6 @@ class Game:
         # Updating
         self.debugger.draw(self.screen)
         pygame.display.update()
-
 
     def handle_event(self, event):
         if event.type == pygame.QUIT:
@@ -83,7 +84,7 @@ class Game:
     def gameover(self):
         font = pygame.font.SysFont("monospace", 80)
         text = font.render("Game over", 1, (0, 0, 0))
-        self.screen.blit(text, (self.size / 2).getTuple())
+        self.screen.blit(text, (self.size / 2).get_tuple())
         self.is_game_over = True
 
 

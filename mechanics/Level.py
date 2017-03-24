@@ -12,11 +12,11 @@ class Block(Drawable):
     def collide(self, other):
         from pygame.rect import Rect
         if isinstance(other, Drawable):
-            return other.getRect().colliderect(self.getRect())
+            return other.get_rect().colliderect(self.get_rect())
         if isinstance(other, Rect):
-            return other.colliderect(self.getRect())
+            return other.colliderect(self.get_rect())
         if isinstance(other, Vec2D):
-            return self.getRect().collidepoint(other.getTuple())
+            return self.get_rect().collidepoint(other.get_tuple())
         else:
             return None
 
@@ -28,11 +28,11 @@ class Block(Drawable):
         if enemy_type == 0:
             return
         self.enemy = Enemy(self.size)
-        self.enemy.stand_on(self.getRect())
+        self.enemy.stand_on(self.get_rect())
 
     def draw(self, screen):
         import pygame
-        pygame.draw.rect(screen, Block.COLOR, self.getRect())
+        pygame.draw.rect(screen, Block.COLOR, self.get_rect())
         if self.enemy is not None:
             self.enemy.draw(screen)
 
@@ -51,7 +51,7 @@ class Level:
         for block in self.blocks:
             if block.enemy is None: continue
             block.move()
-        if Vec2D.isVec(move):
+        if Vec2D.is_vec(move):
             for block in self.blocks:
                 block.pos += move
             return True
