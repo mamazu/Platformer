@@ -23,6 +23,11 @@ class Entity(Drawable):
         end = self.pos + self.size / 2 + self.movement * 5
         line(surf, (255, 255, 0), start.get_tuple(), end.get_tuple(), 5)
 
+    def turn_around(self):
+        from pygame.transform import flip
+        self.movement.x *= -1
+        self.image = flip(self.image, True, False)
+
     def move(self):
         from main import Game
         level = Game.level

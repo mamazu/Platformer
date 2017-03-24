@@ -11,7 +11,6 @@ class Player(Entity):
         self.size = Vec2D(30, 30) if not isinstance(size, int) else Vec2D(abs(size), abs(size))
         self.set_image('res/doodle.png')
         self.movement = Vec2D(Player.DEFAULT_SPEED, Player.DEFAULT_GRAVITY)
-        self.control(1)
         self.health = 100
         self.jumping = 0
 
@@ -21,10 +20,8 @@ class Player(Entity):
             return
         direction = x / abs(x)
         # Flipping the image of the player if he turns around
-        if direction != self.movement / Player.DEFAULT_SPEED:
-            from pygame.transform import flip
-            self.image = flip(self.image, True, False)
-        self.movement.x = direction * Player.DEFAULT_SPEED
+        if direction != self.movement.x / Player.DEFAULT_SPEED:
+            self.turn_around()
 
     def move(self):
         Entity.move(self)
